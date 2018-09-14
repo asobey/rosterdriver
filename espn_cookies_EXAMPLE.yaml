@@ -1,0 +1,9 @@
+# Update the three fields with your info and rename file to: 'espn_cookies.yaml'
+# This example file is used to that your private date is not posted to github
+
+# Homepage
+url: http://games.espn.com/ffl/clubhouse?leagueId=XXXXXX&teamId=XX&seasonId=XXXX
+
+# COOKIES
+espn_s2: 'XXXXXXXXXXXXX-EXTREMELY LONG-XXXXXXXXXXXXXXXXXXX'
+SWID: '{XXXXXXX-XXXXX-XXXXXXXXXX-XXXXXXXXXXX}'

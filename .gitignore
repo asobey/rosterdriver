@@ -1,0 +1,8 @@
+**/.idea/
+**/.cache/
+**/__pycache__/
+**/.idea/
+geckodriver.log
+espn_cookies.yaml
+test_scripts.py
+.vscode

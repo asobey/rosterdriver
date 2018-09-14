@@ -1,3 +1,6 @@
+#ORIGINAL WORK HERE: 
+#https://github.com/wgmiller/rosterdriver
+
 # ESPN Fantasy Football Roster Driver
 
 Roster Driver uses Selenium Webdriver to make changes to your ESPN fantasy football team. Using the requests library to gather data from borischen.co, your starting lineup can be set automatically with the best ranked players for each week. Waiver wire targets can also be identified by cross referencing the available free agents in your league with the tiers of players at borischen.co
