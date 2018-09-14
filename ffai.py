@@ -21,7 +21,7 @@ d = RosterDriver(url, cookies)
 
 for ros in d.roster:
     print(ros)
-#d.tiered_update()
+d.tiered_update()
 print()
 w = d.fetch_waiver_targets()
 for p in w:

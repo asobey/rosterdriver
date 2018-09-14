@@ -43,5 +43,5 @@ def get_tier(slot, name):
     return 15
 
 
-def get_slot(pos):
+def get_slot(pos):  # Using in roster_driver.fetch_players
     return positions[pos]

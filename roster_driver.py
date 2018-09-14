@@ -14,10 +14,10 @@ class RosterDriver(object):
         self.driver.get(url)
         for cookie in cookies:
             n = cookie
-            c = {'name': n, 'value': cookies[n]}
+            c = {'name': n, 'value': cookies[n]}  # Revisit for understanding cookies[n]?
             self.driver.add_cookie(c)
         self.driver.get(url)
-        assert "Log In" not in self.driver.title
+        assert "Log In" not in self.driver.title  # Make sure the you are logged in by checking for 'Log In' not there
         self.roster = []
         self.fetch_roster()
 
@@ -28,15 +28,16 @@ class RosterDriver(object):
         return r
         # return 'RosterDriver(%s)' % (self.url, )
 
-    def fetch_roster(self):
+    def fetch_roster(self):  # Why is this needed?
         self.roster = self.fetch_players()
 
     def quit_driver(self):
         self.driver.quit()
 
-    def fetch_players(self):
+    def fetch_players(self): # This is used twice: 1) At init to fill roster 2)
         players = []
         elements = self.driver.find_elements_by_class_name('playertablePlayerName')
+        # print(elements)  # DEBUG
         for player in elements:
             print(f'player: {player.text}')  # DEBUG
             p = player.text.replace('ST D/', 'ST D').replace('ST D/', 'ST D')
