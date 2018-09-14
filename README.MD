@@ -1,6 +1,12 @@
 #ORIGINAL WORK HERE: 
 #https://github.com/wgmiller/rosterdriver
 
+The reason this project was forked, was because the original project only worked with IOS and linux due to pycookiecheat import.
+
+In order to work with Windows the cookies are manually extracted and placed into 'espn_cookies.yaml'.
+
+This version should work with IOS and linux, but may be more cumbersome to those users.
+
 # ESPN Fantasy Football Roster Driver
 
 Roster Driver uses Selenium Webdriver to make changes to your ESPN fantasy football team. Using the requests library to gather data from borischen.co, your starting lineup can be set automatically with the best ranked players for each week. Waiver wire targets can also be identified by cross referencing the available free agents in your league with the tiers of players at borischen.co
