@@ -16,14 +16,18 @@ url = private_data['url']
 cookies = {'espn_s2': private_data['espn_s2'],
 'SWID': private_data['SWID']}
 
-
+print('==============INITIALIZE ROSTER DRIVER=============')
 d = RosterDriver(url, cookies)
-
+print('==============PRINT ROSTER=============')
 for ros in d.roster:
     print(ros)
+print('==============TIERED UPDATE=============')
 d.tiered_update()
 print()
+print('==============FETCH WAIVER TARGETS=============')
 w = d.fetch_waiver_targets()
+print('==============PRINT WAIVER TARGETS=============')
 for p in w:
     print(p)
+print('==============QUIT=============')
 d.quit_driver()

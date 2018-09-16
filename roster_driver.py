@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from tiers import get_tier, get_slot
+import time
 
 
 class RosterDriver(object):
@@ -37,12 +38,15 @@ class RosterDriver(object):
     def fetch_players(self): # This is used twice: 1) At init to fill roster 2)
         players = []
         elements = self.driver.find_elements_by_class_name('playertablePlayerName')
-        # print(elements)  # DEBUG
+        print(elements)  # DEBUG
         for player in elements:
-            print(f'player: {player.text}')  # DEBUG
-            p = player.text.replace('ST D/', 'ST D').replace('ST D/', 'ST D')
+            #print(f'player: {player.text}')  # DEBUG
+            #p = player.text.replace('ST D/', 'ST D')#.replace('ST D/', 'ST D')
+            if 'D/ST' in player.text:
+                p = player.text.replace(' D/ST D/ST', ', DST DST')
+            else: p = player.text
             print(f'player: {p}')  # DEBUG
-            p = p.replace('/', ', ')
+            #p = p.replace('/', ', ')
             name, info = p.split(',')
             slot = info.split(' ')
             tier = get_tier(get_slot(slot[2]), name)
@@ -51,7 +55,9 @@ class RosterDriver(object):
 
     def fetch_waiver_wire(self):
         self.driver.find_element_by_xpath('//*[@id="games-tabs"]/li[3]/a').click()
+        time.sleep(1)
         self.driver.find_element_by_xpath('//*[@id="playertable_0"]/tbody/tr[2]/td[15]/a').click()
+        time.sleep(2)
         waivers = self.fetch_players()
         return waivers
 
