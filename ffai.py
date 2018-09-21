@@ -19,8 +19,8 @@ cookies = {'espn_s2': private_data['espn_s2'],
 print('==============INITIALIZE ROSTER DRIVER=============')
 d = RosterDriver(url, cookies)
 print('==============PRINT ROSTER=============')
-for ros in d.roster:
-    print(ros)
+# for ros in d.roster:
+#     print(ros)
 print('==============TIERED UPDATE=============')
 d.tiered_update()
 print()

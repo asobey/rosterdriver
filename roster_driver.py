@@ -6,7 +6,7 @@ import time
 
 
 class RosterDriver(object):
-    '''Creates a webdriver speficially for ESPN fantasy'''
+    """Creates a webdriver specifically for ESPN fantasy"""
 
     def __init__(self, url, cookies):
         self.url = url
@@ -14,8 +14,8 @@ class RosterDriver(object):
         self.driver = webdriver.Chrome()
         self.driver.get(url)
         for cookie in cookies:
-            n = cookie
-            c = {'name': n, 'value': cookies[n]}  # Revisit for understanding cookies[n]?
+            c = {'name': cookie, 'value': cookies[cookie]}  # Revisit for understanding cookies[n]?
+            print(c)
             self.driver.add_cookie(c)
         self.driver.get(url)
         assert "Log In" not in self.driver.title  # Make sure the you are logged in by checking for 'Log In' not there
@@ -75,6 +75,7 @@ class RosterDriver(object):
         waivers = self.fetch_waiver_wire()
         for p in waivers:
             if p['tier'] < ros_tiers[p['slot_id']]:
+                print(f'switch', p, 'for player', ros_tiers[p['slot_id']])
                 targets.append(p)
         return targets
 
@@ -89,6 +90,8 @@ class RosterDriver(object):
             s_slot = 15
         s = id + str(s_slot)
         b = id + str(b_slot - 1)
+        print('s:', s)
+        print('b:', b)
         self.driver.find_element_by_id(s).click()
         self.driver.find_element_by_id(b).click()
 
@@ -104,20 +107,20 @@ class RosterDriver(object):
         self.driver.find_element_by_id("pncSaveRoster0").click()
 
     def tiered_update(self):
-        n = 9  # number of starters, used to split roster into starters and bench
+        n = 10  # number of starters, used to split roster into starters and bench
         ros = self.roster
         starters = ros[:n]
         bench = ros[n:]
-        for i, s in enumerate(starters):
-            r = -1  # index of replacement player to be swapped into starting lineup
-            t = s['tier']  # lowest tier for slot
-            if s['tier'] > 1:
-                for j, b in enumerate(bench):
-                    if b['slot_id'] == s['slot_id'] and b['tier'] < t:
-                        r = j
-                        t = b['tier']
-                if r > -1:
-                    print(s, i, r + n)
-                    self.swap_players(i, r + n)
-                    starters[i], bench[r] = bench[r], starters[i]
+        for ix, starter in enumerate(starters):
+            replacement = -1  # index of replacement player to be swapped into starting lineup
+            lowest_tier = starter['tier']  # lowest tier for slot
+            if starter['tier'] > 1:
+                for ix2, bench_player in enumerate(bench):
+                    if bench_player['slot_id'] == starter['slot_id'] and bench_player['tier'] < lowest_tier:
+                        replacement = ix2
+                        lowest_tier = bench_player['tier']
+                if replacement > -1:
+                    print('STARTER:', starter, 'index:', ix, 'bench index:', replacement + n)
+                    self.swap_players(ix, replacement + n)
+                    starters[ix], bench[replacement] = bench[replacement], starters[ix]
         return starters + bench
