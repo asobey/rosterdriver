@@ -35,18 +35,19 @@ class RosterDriver(object):
     def quit_driver(self):
         self.driver.quit()
 
-    def fetch_players(self): # This is used twice: 1) At init to fill roster 2)
+    def fetch_players(self):  # This is used twice: 1) At init to fill roster 2)
         players = []
         elements = self.driver.find_elements_by_class_name('playertablePlayerName')
         print(elements)  # DEBUG
         for player in elements:
-            #print(f'player: {player.text}')  # DEBUG
-            #p = player.text.replace('ST D/', 'ST D')#.replace('ST D/', 'ST D')
+            # print(f'player: {player.text}')  # DEBUG
+            # p = player.text.replace('ST D/', 'ST D')#.replace('ST D/', 'ST D')
             if 'D/ST' in player.text:
                 p = player.text.replace(' D/ST D/ST', ', DST DST')
-            else: p = player.text
+            else:
+                p = player.text
             print(f'player: {p}')  # DEBUG
-            #p = p.replace('/', ', ')
+            # p = p.replace('/', ', ')
             name, info = p.split(',')
             slot = info.split(' ')
             tier = get_tier(get_slot(slot[2]), name)
@@ -80,16 +81,16 @@ class RosterDriver(object):
         return targets
 
     def swap_players(self, s_slot, b_slot):
-        '''swaps player in starting lineup with one on bench'''
+        """swaps player in starting lineup with one on bench"""
         # build id attributes for move buttons
-        id = 'pncEditSlot_'
+        id_prefix = 'pncEditSlot_'
         # flex ID is actually slot 15, which shifts the rest minus 1
         if s_slot > 6:
             s_slot -= 1
         elif s_slot == 6:
             s_slot = 15
-        s = id + str(s_slot)
-        b = id + str(b_slot - 1)
+        s = id_prefix + str(s_slot)
+        b = id_prefix + str(b_slot - 1)
         print('s:', s)
         print('b:', b)
         self.driver.find_element_by_id(s).click()

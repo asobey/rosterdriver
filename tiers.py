@@ -33,7 +33,7 @@ def get_tier(slot, name):
     try:
         r.raise_for_status()
     except Exception as exc:
-        print('There was a problem: %s' % (exc))
+        print('There was a problem: %s' % exc)
 
     tiers = r.text.splitlines()
     print(tiers)
